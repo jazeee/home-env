@@ -1,0 +1,29 @@
+export BROWSER=none
+export DJANGO_WATCHMAN_TIMEOUT=5000
+
+alias gitpullmain='git pull --rebase origin main:main'
+alias gitfetchmain='git fetch origin main:main'
+alias main='git checkout main'
+alias rebasemain='gitfetchmain && git rebase main -i'
+#alias gitpushFeature='git push upstream HEAD:branch -f'
+alias aliases='source ~/.zshrc_local'
+alias editAliases='vi ~/.zshrc_local'
+alias gitpr='gh pr create --fill-first'
+alias linear-create-ticket='node ~/code/cbh/linear-creator/dist/main.js'
+
+checkout() {
+  if [ -z "${1}" ]; then
+    echo "Add a branch name";
+    return;
+  fi
+  #git checkout -b jaz-$(date "+%Y-%m-%dT%H-%M-%S")-${1}
+  git checkout -b jaz-$(date "+%s")-${1}
+}
+
+autoload -Uz vcs_info
+precmd() { vcs_info }
+zstyle ':vcs_info:git:*' formats '%b '
+setopt PROMPT_SUBST
+PROMPT='%F{green}%t%f %F{cyan}%~%f %F{red}${vcs_info_msg_0_}%f%# '
+
+
